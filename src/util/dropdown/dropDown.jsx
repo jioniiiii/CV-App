@@ -14,32 +14,30 @@ function DropDown(props){
         setUsername(e.target.value);
     };
 
-    return(
+    
+    return (
         <div className="collapse-form">
-            <button className="toggle-btn" onClick={toggleForm}>
+            <button className="toggle-btn" type="button" onClick={toggleForm}>
                 {isOpen ? 'Close' : props.text}
             </button>
-            {isOpen && (
-                <form className="form">
-                    <div className="form-input">
+            <form className={`form ${isOpen ? 'open' : ''}`}>
+                <div className="form-input">
                     <FormGroup
                         id="name"
-                        label="Name"
+                        label="Full Name"
                         name="name"
                         inputType="text"
-                        value={name}//managment for form
                         onChange={handleInputChange}
-                        placeholder="Enter your Name"
+                        placeholder="Enter your First and Last Name"
                         required={true}
                     />
                     <FormGroup
-                        id="lname"
-                        label="Last Name"
-                        name="name"
+                        id="email"
+                        label="Email"
+                        name="email"
                         inputType="text"
-                        value={name}
                         onChange={handleInputChange}
-                        placeholder="Enter your Last Name"
+                        placeholder="Enter your Email"
                         required={true}
                     />
                     <FormGroup
@@ -47,14 +45,21 @@ function DropDown(props){
                         label="Mobile"
                         name="mobile"
                         inputType="text"
-                        value={name}
                         onChange={handleInputChange}
                         placeholder="Enter your Phonenumber"
                         required={true}
                     />
-                    </div>
-                </form>
-            )}
+                    <FormGroup
+                        id="address"
+                        label="Address"
+                        name="address"
+                        inputType="text"
+                        onChange={handleInputChange}
+                        placeholder="City, Country"
+                        required={true}
+                    />
+                </div>
+            </form>
         </div>
     );
 }

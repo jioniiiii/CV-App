@@ -1,6 +1,6 @@
 import './form.css'
 
-export const FormGroup =({id,label,name,inputType,value,onChange,placeholder,big,required}) => {
+export const FormGroup =({id,label,name,inputType,onChange,placeholder,big,required}) => {
     return (
         <div className='form-row'>
             <label htmlFor={id}>{label}</label>
@@ -8,14 +8,12 @@ export const FormGroup =({id,label,name,inputType,value,onChange,placeholder,big
                 {big ?  <textarea id={id}  
                                   type={inputType} 
                                   name={name} 
-                                  value={value} 
                                   placeholder={placeholder} 
                                   onChange={onChange} 
                                   required={required} /> :
                         <input id={id} 
                                type={inputType} 
                                name={name} 
-                               value={value} 
                                placeholder={placeholder} 
                                onChange={onChange} 
                                required={required} />
