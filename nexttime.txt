@@ -1,3 +1,4 @@
-make form pretty with animation
-think of general web page stucture 
-start making form have a preview
+start working on page ui
+make data stay on input field while having real time update 
+add download pdf 
+add preset data

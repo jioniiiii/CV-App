@@ -3,7 +3,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
-    max-width: 25%;
+    width: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -17,11 +17,27 @@
     width: 100%;
 }
 
-.form.open {
-    max-height: 500px; 
+.form-enter {
+    max-height: 0;
 }
 
-.toggle-btn {
+.form-enter-active {
+    max-height: 1000px; 
+}
+
+.form-enter-done {
+    max-height: none; 
+}
+
+.form-exit {
+    max-height: 1000px; 
+}
+
+.form-exit-active {
+    max-height: 0;
+}
+
+.toggle-btn, .submit-btn {
     margin-bottom: 10px;
     padding: 10px 15px;
     border: none;
@@ -35,7 +51,12 @@
     transition: background-color 0.3s, color 0.3s;
 }
 
-.toggle-btn:hover {
+.toggle-btn:hover, .submit-btn:hover {
     background-color: #007bff;
     color: #fff;
+}
+
+.toggle-btn.close:hover {
+    background-color: red;
+    color: white;
 }

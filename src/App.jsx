@@ -1,12 +1,8 @@
-import DropDown from './util/dropdown/dropDown'
+import Display from './util/cv-section/cv';
 
 function App() {
   return(
-    <div>
-      <DropDown text ="General Info"/>
-      <DropDown text ="Education"/>
-      <DropDown text ="Experience"/>
-    </div>
+        <Display/>
   );
 }
 

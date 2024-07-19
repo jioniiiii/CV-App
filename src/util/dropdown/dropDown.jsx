@@ -1,69 +1,49 @@
-import { useState } from 'react'
+import { useState, useRef , useEffect } from 'react'
 import { FormGroup } from '../form/form';
+import { CSSTransition } from 'react-transition-group';
 import './dropDown.css'
 
 function DropDown(props){
-    const [isOpen, setIsOpen] = useState(false);
-    const [formData, setFormData] = useState({//psax aprapano
-        name: '',
-        email: '',
-        mobile: '',
-        address: '',
-        edu: '',
-        degree: '',
-        startDate: '',
-        endDate: '',
-        location: '',
-        compName: '',
-        pos: '',
-        workStartDate: '',
-        workEndDate: '',
-        workLoc: '',
-        desc: ''
-    });//this and his function handle the sta of the input field(it checks when a srting have been added)
-    const [submittedData, setSubmittedData] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);//tracks whether the form is open or closed
+    const formRef = useRef(null);//used to help manage animations and transitions(DOM manipulation)
+    const [formData, setFormData] = useState(props.initialData);
 
-    const toggleForm = () => {
+    useEffect(() => {
+        setFormData(props.initialData);
+    }, [props.initialData]);
+
+    const toggleForm = () => { //opening/close for form
         setIsOpen(!isOpen);
     }
 
-    const handleInputChange = (e) => {//psax aprapano
+    const handleInputChange = (e) => {//changes the form data real time
         const { name, value } = e.target;
-        setFormData({
+        const updatedFormData = {
             ...formData,
             [name]: value
-        });
+        };
+        setFormData(updatedFormData);
+        props.onInputChange(updatedFormData, props.text); //real time update
     };
     
-    const handleSubmit = (e) => {//psax aprapano
-        e.preventDefault();
-        setSubmittedData([...submittedData, formData]);
-        setFormData({
-            name: '',
-            email: '',
-            mobile: '',
-            address: '',
-            edu: '',
-            degree: '',
-            startDate: '',
-            endDate: '',
-            location: '',
-            compName: '',
-            pos: '',
-            workStartDate: '',
-            workEndDate: '',
-            workLoc: '',
-            desc: ''
-        })
-    }
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setFormData(props.initialData);
+    };
     
     return (
         <div className="collapse-form">
-            <button className="toggle-btn" type="button" onClick={toggleForm}>
+            <button className={`toggle-btn ${isOpen ? 'close' : ''}`} type="button" onClick={toggleForm}>
                 {isOpen ? 'Close' : props.text}
             </button>
-            {isOpen && (
-                <form className={`form ${isOpen ? 'open' : ''}`} onSubmit={handleSubmit}>
+            <CSSTransition
+                in = {isOpen}
+                timeout = {500}
+                classNames = "form"
+                unmountOnExit
+                nodeRef={formRef}
+            >
+                <form ref={formRef} className={`form ${isOpen ? 'open' : ''}`} onSubmit={handleSubmit}>
                     <div className="form-input">
                     {props.text === "General Info" ? (
                             <>
@@ -107,7 +87,7 @@ function DropDown(props){
                                     value={formData.address}
                                     required={true}
                                 />
-                                <button type="submit">Submit</button>
+                                
                             </>
                         ) : null}
                         {props.text === "Education" ? (
@@ -229,20 +209,9 @@ function DropDown(props){
                             </>
                         ) : null}
                     </div>
+                    <button className='submit-btn' type="submit">submit</button>
                 </form>
-            )}
-            {submittedData.length > 0 && (//psax aprapano
-                <div className="submitted-data">
-                    <h3>Submitted Data:</h3>
-                    {submittedData.map((data, index)=>
-                        <div key={index}>
-                            {Object.entries(data).map(([key, value]) =>(
-                                <p key={key}><strong>{key}</strong>:{value}</p>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            )}
+            </CSSTransition>
         </div>
     );
 }
